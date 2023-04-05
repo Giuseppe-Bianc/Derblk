@@ -2,7 +2,7 @@ package org.dersbian.canalisis
 
 abstract class Expression : Node() {
     companion object {
-        fun prettyPrint(node: Node, indent: String = "", isLast: Boolean = true, isFirst: Boolean = true) {
+        fun prettyPrint(node: Node, indent: String = "", isLast: Boolean = false, isFirst: Boolean = true) {
             printColoredText(
                 "$indent${if (isFirst) node.type else if (isLast) "└──${node.type}" else "├──${node.type}"}" +
                         if (node is Token && node.value != null) " ${node.value}" else "",
@@ -12,6 +12,7 @@ abstract class Expression : Node() {
             val lastChild = node.getChildren().lastOrNull()
             node.getChildren().forEach { prettyPrint(it, newIndent, it == lastChild, false) }
         }
+
         fun printColoredText(message: String, color: String = "white") {
             val reset = "\u001B[0m"
             val colorCode = when (color) {

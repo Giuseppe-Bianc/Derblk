@@ -4,11 +4,13 @@ import java.math.BigInteger
 import java.util.regex.Pattern
 
 class Lexer(inline val input: CharSequence) {
-
     var currentPosition = 0
     var currentLine = 1
     val length: Int = input.length
     val indices: IntRange = input.indices
+    val _diagnostics: MutableList<String> = mutableListOf()
+    inline val previousChar: Char
+        inline get() = input.getOrNull(currentPosition - 1) ?: ' '
     inline val currentChar: Char
         inline get() = input.getOrNull(currentPosition) ?: ' '
     inline val currentCharLower: Char
@@ -17,6 +19,8 @@ class Lexer(inline val input: CharSequence) {
         inline get() = input.getOrNull(currentPosition + 1) ?: ' '
     inline val nextCharLower: Char
         inline get() = nextChar.lowercaseChar()
+    inline val diagnostics: List<String>
+        inline get() = _diagnostics
 
     companion object {
         val isHEXisOCT = booleanArrayOf(false, false)
@@ -127,7 +131,13 @@ class Lexer(inline val input: CharSequence) {
 
                 else -> {
                     currentPosition++
-                    return Token(TokenType.NULL, Position(currentPosition - 1, currentLine))
+                    _diagnostics.add("ERROR: bad character input: '${previousChar}'");
+                    return Token(
+                        TokenType.NULL,
+                        previousChar.toString(),
+                        Position(currentPosition - 1, currentLine),
+                        null
+                    )
                 }
             }
         }

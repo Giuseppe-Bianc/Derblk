@@ -88,6 +88,28 @@ class LexerTest{
         Assertions.assertEquals(tokens[0].type, TokenType.NULL)
         Assertions.assertEquals(tokens[1].type, TokenType.NULL)
         Assertions.assertEquals(tokens[2].type, TokenType.NULL)
+        Assertions.assertEquals(tokens[0].text, "#")
+        Assertions.assertEquals(tokens[1].text, "$")
+        Assertions.assertEquals(tokens[2].text, "^")
+    }
+
+    @Test
+    fun testUnsupportedCharactersDiagnostic() {
+        val input = "#$^"
+
+        val lexer = Lexer(input)
+        val tokens = lexer.lex()
+
+        Assertions.assertEquals(tokens[0].type, TokenType.NULL)
+        Assertions.assertEquals(tokens[1].type, TokenType.NULL)
+        Assertions.assertEquals(tokens[2].type, TokenType.NULL)
+        Assertions.assertEquals(
+            lexer.diagnostics, listOf(
+                "ERROR: bad character input: '#'",
+                "ERROR: bad character input: '$'",
+                "ERROR: bad character input: '^'"
+            )
+        )
     }
 
     @Test

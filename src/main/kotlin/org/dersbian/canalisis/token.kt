@@ -34,7 +34,6 @@ data class Token(
     constructor(type: TokenType, position: Position, value: Any?) : this(type, type.value, position, value)
 
     constructor(type: TokenType, position: Position) : this(type, type.value, position, null)
-
     override inline fun getChildren(): List<Node> = emptyList()
 
     override fun toString(): String =
