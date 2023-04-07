@@ -3,7 +3,7 @@ package org.dersbian.canalisis
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-class LexerTest{
+class LexerTest {
     @Test
     fun testAssignmentExpression() {
         val lexer = Lexer("x = 5 + 3")
@@ -17,6 +17,7 @@ class LexerTest{
         Assertions.assertEquals(tokens[4].type, TokenType.NUMBER)
         Assertions.assertEquals(tokens[4].text, "3")
     }
+
     @Test
     fun testArithmeticExpressions() {
         val lexer = Lexer("1 + 2 * 3 - 4 / 2")
@@ -92,6 +93,7 @@ class LexerTest{
         Assertions.assertEquals(tokens[1].text, "$")
         Assertions.assertEquals(tokens[2].text, "^")
     }
+
     @Test
     fun testUnsupportedCharactersDiagnostic() {
         val input = "#$^"
