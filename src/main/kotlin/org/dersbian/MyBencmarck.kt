@@ -1,4 +1,5 @@
 package org.dersbian
+
 import org.dersbian.canalisis.Lexer
 import org.dersbian.canalisis.SyntaxTree
 import org.openjdk.jmh.annotations.*
