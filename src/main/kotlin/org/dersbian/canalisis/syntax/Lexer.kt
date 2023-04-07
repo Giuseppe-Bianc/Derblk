@@ -1,4 +1,4 @@
-package org.dersbian.canalisis
+package org.dersbian.canalisis.syntax
 
 import java.math.BigInteger
 import java.util.regex.Pattern

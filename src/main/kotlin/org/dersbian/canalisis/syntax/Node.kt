@@ -1,4 +1,4 @@
-package org.dersbian.canalisis
+package org.dersbian.canalisis.syntax
 
 abstract class Node {
     abstract val type: TokenType

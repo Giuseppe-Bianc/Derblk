@@ -1,4 +1,4 @@
-package org.dersbian.canalisis
+package org.dersbian.canalisis.syntax
 
 //costanti
 const val A = 'a'

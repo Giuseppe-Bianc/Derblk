@@ -1,7 +1,7 @@
 package org.dersbian
 
-import org.dersbian.canalisis.Lexer
-import org.dersbian.canalisis.SyntaxTree
+import org.dersbian.canalisis.syntax.Lexer
+import org.dersbian.canalisis.syntax.SyntaxTree
 import org.openjdk.jmh.annotations.*
 import java.util.concurrent.TimeUnit
 
@@ -29,6 +29,6 @@ class MyBencmarck {
     /* A benchmark function. */
     @Benchmark
     final fun benchmarkParser() {
-        SyntaxTree.parse("1 - 5 + 4 + (2 + 3 + (0x33 + 077) / 2)")
+        SyntaxTree.parse("1 - 5 + 4 + (2 + 3 + (0x33 + 077) / -2)")
     }
 }

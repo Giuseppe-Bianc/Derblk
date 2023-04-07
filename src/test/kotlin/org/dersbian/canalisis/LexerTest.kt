@@ -1,5 +1,7 @@
 package org.dersbian.canalisis
 
+import org.dersbian.canalisis.syntax.Lexer
+import org.dersbian.canalisis.syntax.TokenType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

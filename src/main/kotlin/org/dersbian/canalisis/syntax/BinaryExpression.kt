@@ -1,4 +1,4 @@
-package org.dersbian.canalisis
+package org.dersbian.canalisis.syntax
 
 class BinaryExpression(inline val left: Expression, inline val operator: Token, inline val right: Expression) :
     Expression() {

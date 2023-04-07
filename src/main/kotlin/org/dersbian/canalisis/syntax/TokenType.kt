@@ -1,14 +1,14 @@
-package org.dersbian.canalisis
+package org.dersbian.canalisis.syntax
 
 enum class TokenType(
     inline val value: CharSequence = "",
     inline val precedence: Int = 0,
-    inline val una_precedence /*unary precedence*/: Int = 0
+    inline val unaryPrecedence: Int = 0
 ) {
     //lexer
     NULL,
-    PLUS("+", 1),
-    MINUS("-", 1),
+    PLUS("+", 1, 3),
+    MINUS("-", 1, 3),
     MULTIPLY("*", 2),
     DIVIDE("/", 2),
     LPAREN("("),
@@ -31,11 +31,6 @@ enum class TokenType(
     //Parser
     LITERAL_EXPRESION,
     BINARY_EXPRESION,
-    PARENTESIZED_EXPRESSION
-}
-
-inline fun TokenType.getBinOperatorPecedence(): Int = when (this) {
-    TokenType.MULTIPLY, TokenType.DIVIDE -> 2
-    TokenType.PLUS, TokenType.MINUS -> 1
-    else -> 0
+    PARENTESIZED_EXPRESSION,
+    UNARY_EXPRESION
 }

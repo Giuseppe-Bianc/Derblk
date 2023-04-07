@@ -1,4 +1,4 @@
-package org.dersbian.canalisis
+package org.dersbian.canalisis.syntax
 
 class SyntaxTree(inline val diagnostics: List<String>, inline val root: Expression, inline val endOfFileToken: Token) {
     companion object {

@@ -1,4 +1,4 @@
-package org.dersbian.canalisis
+package org.dersbian.canalisis.syntax
 
 class Parser(inline val text: String) {
     val tokens: List<Token>
@@ -49,7 +49,15 @@ class Parser(inline val text: String) {
 
 
     fun parseExpression(parentPrecedence: Int = 0): Expression {
-        var left: Expression = parsePrimaryExpression()
+        var left: Expression
+        var unaryPrecedence = current.type.unaryPrecedence
+        if (unaryPrecedence != 0 && unaryPrecedence >= parentPrecedence) {
+            val operatorToken = nextToken
+            val operand = parseExpression(unaryPrecedence)
+            left = UnaryExpression(operatorToken, operand)
+        } else {
+            left = parsePrimaryExpression()
+        }
         while (true) {
             val precedence = current.type.precedence
             if (precedence == 0 || precedence <= parentPrecedence) break

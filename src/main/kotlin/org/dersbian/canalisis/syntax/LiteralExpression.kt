@@ -1,4 +1,4 @@
-package org.dersbian.canalisis
+package org.dersbian.canalisis.syntax
 
 class LiteralExpression(inline val literal: Token) : Expression() {
     override val type: TokenType = TokenType.LITERAL_EXPRESION
