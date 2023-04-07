@@ -7,6 +7,6 @@ class ParenthesizedExpression(
 ) : Expression() {
     override val type: TokenType = TokenType.PARENTESIZED_EXPRESSION
 
-    override inline fun getChildren(): List<Node> = listOf(openParenthesisToken, expression, closeParenthesisToken)
+    override val children: List<Node> = listOf(openParenthesisToken, expression, closeParenthesisToken)
 
 }
