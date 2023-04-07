@@ -1,11 +1,13 @@
 package org.dersbian.canalisis
 
-class Evaluator(inline val root: Expression) {
-    inline fun evaluate(): Int = evaluateExpression(root)
+import java.math.BigInteger
 
-    fun evaluateExpression(node: Expression): Int {
+class Evaluator(inline val root: Expression) {
+    inline fun evaluate(): BigInteger = evaluateExpression(root)
+
+    fun evaluateExpression(node: Expression): BigInteger {
         return when (node) {
-            is LiteralExpression -> node.literal.value as Int
+            is LiteralExpression -> node.literal.value as BigInteger
             is BinaryExpression -> {
                 val left = evaluateExpression(node.left)
                 val right = evaluateExpression(node.right)
