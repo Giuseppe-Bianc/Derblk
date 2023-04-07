@@ -28,6 +28,6 @@ class MyBencmarck {
     /* A benchmark function. */
     @Benchmark
     final fun benchmarkParser() {
-        SyntaxTree.parse("1 - 5 + 4 + (2 + 3)")
+        SyntaxTree.parse("1 - 5 + 4 + (2 + 3 + (0x33 + 077) / 2)")
     }
 }
