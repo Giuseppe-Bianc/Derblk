@@ -27,15 +27,17 @@ const val NO = '9'
 data class Token(
     override inline val type: TokenType,
     inline val text: CharSequence,
-    inline val position: Position,
-    inline val value: Any?
+    inline val position: Int,
+    inline val line: Int,
+    inline val value: Any? = null
 ) : Node() {
 
-    constructor(type: TokenType, position: Position, value: Any?) : this(type, type.value, position, value)
+    constructor(type: TokenType, position: Int, line: Int, value: Any?) : this(type, type.value, position, line, value)
 
-    constructor(type: TokenType, position: Position) : this(type, type.value, position, null)
-    override inline fun getChildren(): List<Node> = emptyList()
+    constructor(type: TokenType, position: Int, line: Int) : this(type, type.value, position, line)
+
+    override val children: List<Node> = emptyList()
 
     override fun toString(): String =
-        "Token(type=$type, text='$text', position=$position${if (value == null) " )" else ", value=$value)"}"
+        "Token(type=$type, text='$text', position=$position, line=$line${if (value == null) ")" else ", value=$value)"}"
 }
