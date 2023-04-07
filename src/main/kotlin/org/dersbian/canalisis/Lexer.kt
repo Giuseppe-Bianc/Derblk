@@ -84,37 +84,37 @@ class Lexer(inline val input: CharSequence) {
                 currentChar.isLetter() -> return parseIdentifier()
                 currentChar == '+' -> {
                     currentPosition++
-                    return Token(TokenType.PLUS, Position(currentPosition - 1, currentLine))
+                    return Token(TokenType.PLUS, currentPosition - 1, currentLine)
                 }
 
                 currentChar == '%' -> {
                     currentPosition++
-                    return Token(TokenType.MODULO, Position(currentPosition - 1, currentLine))
+                    return Token(TokenType.MODULO, currentPosition - 1, currentLine)
                 }
 
                 currentChar == '-' -> {
                     currentPosition++
-                    return Token(TokenType.MINUS, Position(currentPosition - 1, currentLine))
+                    return Token(TokenType.MINUS, currentPosition - 1, currentLine)
                 }
 
                 currentChar == '*' -> {
                     currentPosition++
-                    return Token(TokenType.MULTIPLY, Position(currentPosition - 1, currentLine))
+                    return Token(TokenType.MULTIPLY, currentPosition - 1, currentLine)
                 }
 
                 currentChar == '/' -> {
                     currentPosition++
-                    return Token(TokenType.DIVIDE, Position(currentPosition - 1, currentLine))
+                    return Token(TokenType.DIVIDE, currentPosition - 1, currentLine)
                 }
 
                 currentChar == '(' -> {
                     currentPosition++
-                    return Token(TokenType.LPAREN, Position(currentPosition - 1, currentLine))
+                    return Token(TokenType.LPAREN, currentPosition - 1, currentLine)
                 }
 
                 currentChar == ')' -> {
                     currentPosition++
-                    return Token(TokenType.RPAREN, Position(currentPosition - 1, currentLine))
+                    return Token(TokenType.RPAREN, currentPosition - 1, currentLine)
                 }
 
                 currentChar == '>' -> return returnTokenOrOther(TokenType.GREATER_EQUAL, TokenType.GREATER)
@@ -125,23 +125,18 @@ class Lexer(inline val input: CharSequence) {
 
                 currentChar == '!' -> return returnTokenOrOther(TokenType.NOT_EQUAL, TokenType.NOT)
 
-                currentChar == '&' -> return returnTokenOrOther('&', TokenType.ANDAND, TokenType.AND)
+                currentChar == '&' -> return returnTokenOrOther('&', TokenType.AND_AND, TokenType.AND)
 
-                currentChar == '|' -> return returnTokenOrOther('|', TokenType.OROR, TokenType.OR)
+                currentChar == '|' -> return returnTokenOrOther('|', TokenType.OR_OR, TokenType.OR)
 
                 else -> {
                     currentPosition++
                     _diagnostics.add("ERROR: bad character input: '${previousChar}'");
-                    return Token(
-                        TokenType.NULL,
-                        previousChar.toString(),
-                        Position(currentPosition - 1, currentLine),
-                        null
-                    )
+                    return Token(TokenType.NULL, previousChar.toString(), currentPosition - 1, currentLine)
                 }
             }
         }
-        return Token(TokenType.EOF, Position(currentPosition, currentPosition, currentLine))
+        return Token(TokenType.EOF, currentPosition, currentLine)
     }
 
     /**
@@ -159,16 +154,16 @@ class Lexer(inline val input: CharSequence) {
         currentPosition++
         return if (currentChar == nextC) {
             currentPosition++
-            Token(type, Position(currentPosition - 2, currentPosition, currentLine))
-        } else Token(other, Position(currentPosition - 1, currentLine))
+            Token(type, currentPosition - 2, currentLine)
+        } else Token(other, currentPosition - 1, currentLine)
     }
 
     inline fun returnTokenOrOther(type: TokenType, other: TokenType): Token {
         currentPosition++
         return if (currentChar == '=') {
             currentPosition++
-            Token(type, Position(currentPosition - 2, currentPosition, currentLine))
-        } else Token(other, Position(currentPosition - 1, currentLine))
+            Token(type, currentPosition - 2, currentLine)
+        } else Token(other, currentPosition - 1, currentLine)
     }
 
     /**
@@ -227,7 +222,14 @@ class Lexer(inline val input: CharSequence) {
             }
         }
         val text = numBuilder.toString()
-        return Token(TokenType.NUMBER, text, Position(startIndex, currentPosition, currentLine), textToBigInt(text))
+
+        return Token(
+            TokenType.NUMBER,
+            if (isHEXisOCT[0]) "0x$text" else text,
+            startIndex,
+            currentLine,
+            textToBigInt(text)
+        )
     }
 
     /**
@@ -239,11 +241,6 @@ class Lexer(inline val input: CharSequence) {
         val matchResult: MatchResult = IDENTIFIER_REGEX.find(input, currentPosition)!!
         val identifier = matchResult.value
         currentPosition += identifier.length
-        return Token(
-            TokenType.IDENTIFIER,
-            identifier,
-            Position(matchResult.range.first, matchResult.range.last + 1, currentLine),
-            null
-        )
+        return Token(TokenType.IDENTIFIER, identifier, matchResult.range.first, currentLine)
     }
 }

@@ -43,10 +43,10 @@ class LexerTest{
         val tokens = lexer.lex()
         Assertions.assertEquals(tokens[0].type, TokenType.IDENTIFIER)
         Assertions.assertEquals(tokens[0].text, "a")
-        Assertions.assertEquals(tokens[1].type, TokenType.ANDAND)
+        Assertions.assertEquals(tokens[1].type, TokenType.AND_AND)
         Assertions.assertEquals(tokens[2].type, TokenType.IDENTIFIER)
         Assertions.assertEquals(tokens[2].text, "b")
-        Assertions.assertEquals(tokens[3].type, TokenType.OROR)
+        Assertions.assertEquals(tokens[3].type, TokenType.OR_OR)
         Assertions.assertEquals(tokens[4].type, TokenType.NOT)
         Assertions.assertEquals(tokens[5].type, TokenType.IDENTIFIER)
         Assertions.assertEquals(tokens[5].text, "c")
@@ -92,7 +92,6 @@ class LexerTest{
         Assertions.assertEquals(tokens[1].text, "$")
         Assertions.assertEquals(tokens[2].text, "^")
     }
-
     @Test
     fun testUnsupportedCharactersDiagnostic() {
         val input = "#$^"
